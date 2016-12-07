@@ -1,0 +1,245 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<HTML>
+
+<HEAD>
+
+   <TITLE>Branching innovation, recombinant innovation, and endogenous technological transitions</TITLE>
+
+   <META http-equiv=Content-Type content="text/html; charset=windows-1252">
+
+   <META name=keywords content="branching, innovation, recombinant innovation, recombination, endogenous technological transitions, evolutionary economics, netlogo, agent-based modelling, networks">
+
+   <META name=Description content="Recombranch is an evolutionary model of technological transitions designed to explore the dynamics of innovation.">
+
+   <META name=Authors content="Koen Frenken, Luis R. Izquierdo & Paolo Zeppini">
+
+   <STYLE type="text/css">
+      H1 {
+         BACKGROUND-COLOR: #111199;
+         color: #ffffff;
+         font-family: monospace;
+         padding: 5px;
+      }
+   </STYLE>
+   <STYLE type="text/css">
+      H2 {
+         BACKGROUND-COLOR: #66ccff;
+         font-family: arial;
+         padding: 4px;
+      }
+   </STYLE>
+   <STYLE type="text/css">
+      H3 {
+         BACKGROUND-COLOR: #cccccc;
+         font-family: verdana;
+         font-weight: bold;
+         padding: 4px;
+      }
+   </STYLE>
+   <STYLE type="text/css">
+      p {
+         font-family: monospace
+      }
+   </STYLE>
+   <STYLE type="text/css">
+      table {
+         font-family: monospace
+      }
+   </STYLE>
+   <STYLE type="text/css">
+      ul {
+         font-family: monospace
+      }
+   </STYLE>
+   <STYLE type="text/css">
+      ol {
+         font-family: monospace
+      }
+   </STYLE>
+   <STYLE type="text/css">
+      i.parameter {
+         font-family: arial;
+         color: red;
+         font-weight: bold
+      }
+   </STYLE>
+   <STYLE type="text/css">
+      i.variable {
+         font-family: arial;
+         color: black;
+         font-weight: bold
+      }
+   </STYLE>
+   <STYLE type="text/css">
+      i.button {
+         font-family: arial;
+         color: blue;
+         font-weight: bold
+      }
+   </STYLE>
+   <STYLE type="text/css">
+      i.value {
+         font-family: arial;
+         color: #444444;
+         font-weight: bold
+      }
+   </STYLE>
+   <STYLE type="text/css">
+      i.slider {
+         font-family: arial;
+         color: green;
+         font-weight: bold
+      }
+   </STYLE>
+   <STYLE type="text/css">
+      i.monitor {
+         font-family: arial;
+         color: #B8860B;
+         font-weight: bold
+      }
+   </STYLE>
+   <STYLE type="text/css">
+      i.plot {
+         font-family: arial;
+         color: purple;
+         font-weight: bold
+      }
+   </STYLE>
+
+</HEAD>
+
+<body>
+
+   <H1>Branching innovation, recombinant innovation, and endogenous technological transitions</H1>
+   <h3>Koen Frenken, Luis R. Izquierdo &amp; Paolo Zeppini</h3>
+
+   <H2>HOW TO INSTALL THE MODEL</H2>
+
+   <p>To use <b>Recombranch</b>, you will have to install <a target="_blank" href="http://ccl.northwestern.edu/netlogo/">NetLogo 5.3.1 (free and open source)</a> and download <a href="recombranch.nlogo">the model itself</a>. Unzip the downloaded file and click on recombranch.nlogo</p>
+
+   <!--
+   <p>This applet requires requires Java 5 or higher. You may obtain the latest Java plugin from
+      <a target="_blank" href="http://java.sun.com/getjava/download.html">Sun's Java site</a>.</p>
+   <hr>
+
+   <p align="center">
+      <applet code="org.nlogo.lite.Applet" archive="NetLogoLite.jar" width="932" height="467">
+         <param name="DefaultModel" value="recombranch.nlogo">
+         <param name="java_arguments" value="-Djnlp.packEnabled=true">
+      </applet>
+   </p>
+
+
+   <p>powered by
+      <a target="_blank" href="http://ccl.northwestern.edu/netlogo/">NetLogo</a></p>
+
+   <p>view/download model file:
+      <a href="recombranch.nlogo">recombranch.nlogo</a>
+   </p>
+   -->
+
+   <H2>OVERVIEW OF THE MODEL</H2>
+
+   <p><b>Recombranch</b> is an evolutionary model of technological transitions designed to explore the dynamics of innovation. The model is based on two different types of innovations: Branching innovations and recombinant innovations. Branching innovations refer to technological improvements along a particular path, while recombinant innovations represent fusions of multiple paths. Recombinant innovations create "short-cuts" which reduce switching costs allowing agents to escape a technological lock-in. As a result, recombinant innovations speed up technological progress allowing transitions that are impossible with only branching innovations.</p>
+
+   <p>The model replicates some stylised facts of technological change, such as technological lock-in, experimental failure, punctuated change and irreversibility. Furthermore, an extensive simulation experiment reported in <a target="_blank" href="http://dx.doi.org/10.1016/j.eist.2012.06.001">Frenken, Izquierdo &amp; Zeppini (2012)</a> suggests that there is an optimal rate of innovation, which is strongly correlated with the number of recombination innovations. This underlines the pivotal role of technological variety as a seed for recombinant innovation leading to technological transitions.</p>
+
+   <H2>DESCRIPTION OF THE MODEL</H2>
+
+   <p>This section explains the formal model that <b>Recombranch</b> implements. The information provided here should suffice to re-implement the same formal model in any sophisticated enough modelling platform. We use bold red italicised arial font to denote <i class="parameter">parameters</i> (i.e. variables that can be set by the user), and we use bold green italicised arial font to denote the name of the corresponding <i class="slider">slider</i> in the interface of the model above. All <i class="slider">sliders</i> can be changed at run-time with immediate effect on the dynamics of the model (except the number of agents in the run <i class="slider">num-agents</i>).</p>
+
+   <p>In the model there is a constant population of <i class="parameter">N</i> agents (<i class="slider">num-agents</i> &ge; 1) and an evolving set of technologies that agents may use. The model runs in discrete time-steps. At any given time-step <i class="variable">t</i>, each agent is using one and only one technology, and derives a certain utility from doing so. The utility <i class="variable">u<sub>&alpha;,t</sub></i> gained at time-step <i class="variable">t</i> when using technology <i class="variable">&alpha;</i> comes from an intrinsic quality of the technology <i class="variable">l<sub>&alpha;</sub></i> and from the positive externalities that other users of technology <i class="variable">&alpha;</i> exercise on the considered agent:</p>
+
+   <p align="center">
+      <i class="variable">u<sub>&alpha;,t</sub></i> = <i class="variable">l<sub>&alpha;</sub></i> + <i class="parameter">e</i>&middot;<i class="variable">n<sub>&alpha;,t</sub></i>
+   </p>
+
+   <p>where <i class="variable">n<sub>&alpha;,t</sub></i> indicates the number of agents using technology <i class="variable">&alpha;</i> in period <i class="variable">t</i>, and the parameter <i class="parameter">e</i> &isin; [0,1] measures the strength of the externalities (<i class="slider">network-externalities</i>). Each time-step in the model consists of two stages that take place sequentially: the innovation stage and the decision stage.</p>
+
+   <h3>Innovation stage</h3>
+
+   <p>Technologies form a directed network where they represent the nodes, while the links express the genealogical relation. This network evolves in time due to the possibility that agents innovate and create new technologies. In every time-step, each individual agent innovates with independent probability <i class="parameter">p</i> (<i class="slider">p-innovation</i> &isin; [0,1]). Innovations take place differently depending on whether recombinations of existing technologies are allowed or not, something which is determined exogenously in the model (using the switch <i class="slider">recombination?</i>).</p>
+
+   <ul>
+      <li>If recombinations are not allowed (i.e. <i class="slider">recombination?</i> is <i class="value">off</i>), each group of innovators using the same technology <i class="variable">&alpha;</i> branch out from technology <i class="variable">&alpha;</i> to jointly create a new technology <i class="variable">&alpha;*</i> with intrinsic quality level <i class="variable">l<sub>&alpha;*</sub></i> = <i class="variable">l<sub>&alpha;</sub></i> + 1. Thus, in this case the number of technologies created in time-step <i class="variable">t</i> equals the number of different technologies being used by the innovators.</li>
+      <li>If recombinations are allowed (i.e. <i class="slider">recombination?</i> is <i class="value">on</i>), all innovators join up to create one single new technology <i class="variable">&beta;</i> by recombining all the different technologies <i class="variable">&alpha;<sub>i</sub></i> they are currently using. The intrinsic quality level of the new technology is one unit higher than the highest quality of the technologies being recombined, i.e. <i class="variable">l<sub>&beta;</sub></i> = max<sub><i class="variable">i</i></sub>{<i class="variable">l<sub>&alpha;<sub>i</sub></sub></i>} + 1.
+   </ul>
+
+   <p>In either case, whenever a new technology is created, a link is formed from each of the technologies used by its creators to the newly created technology. If all the creators of a new technology come from the same technology we say that the innovation occurred by branching. Otherwise we say that the innovation occurred by recombination. Thus, it is clear that a technology has been created by recombination if and only if it has more than one incoming link in the network.</p>
+
+   <h3>Decision stage</h3>
+
+   <p>The decision procedure is different depending on whether the agent innovated or not. Naturally, all time-step innovators decide to use the technology they just created. Then, the agents who have not innovated in the current time-step synchronously decide which technology to use. The non-innovating agents will switch to the technology that provides them with the highest utility, once switching costs are taken into account. We assume that the cost of switching from technology <i class="variable">&alpha;</i> to technology <i class="variable">&beta;</i> equals the geodesic distance <i class="variable">d<sub>&alpha;&beta;</sub></i> between technologies <i class="variable">&alpha;</i> and <i class="variable">&beta;</i> in the technological network. Thus, the benefit of switching from technology <i class="variable">&alpha;</i> to technology <i class="variable">&beta;</i> is:</p>
+
+   <p align="center">
+      &Delta;<i class="variable">u<sub>&alpha;&rarr;&beta;,t</sub></i> = <i class="variable">u<sub>&beta;,t</sub></i> - <i class="variable">u<sub>&alpha;,t</sub></i> - <i class="variable">d<sub>&alpha;&beta;</sub></i>
+   </p>
+
+   <p>A non-innovating agent using technology <i class="variable">&alpha;</i> will change technology if and only if there exists some other technology <i class="variable">&beta;</i> such that &Delta;<i class="variable">u<sub>&alpha;&rarr;&beta;,t</sub></i> &gt; 0. In that case the agent will choose the technology that provides him with the highest benefit &Delta;<i class="variable">u<sub>&alpha;&rarr;&middot;,t</sub></i>. Ties are resolved randomly.</p>
+
+   <h2>PARAMETERS AND BUTTONS</h2>
+
+   <ul>
+      <li><i class="slider">num-agents</i> (<i class="parameter">N</i>): Number of agents in the run.</li>
+      <li><i class="slider">network-externalities</i> (<i class="parameter">e</i>): Parameter that measures the strength of the externalities (<i class="variable">u<sub>&alpha;,t</sub></i> = <i class="variable">l<sub>&alpha;</sub></i> + <i class="parameter">e</i>&middot;<i class="variable">n<sub>&alpha;,t</sub></i>).</li>
+      <li><i class="slider">p-innovation</i> (<i class="parameter">p</i> &isin; [0,1]): Probability with which each individual agent innovates in each time-step.</li>
+      <li><i class="slider">recombination?</i>: Switch (it can be either <i class="value">on</i> or <i class="value">off</i>) that determines whether recombinations are allowed or not.</li>
+      <li><i class="slider">pause-at-tick</i>: The model will halt at the end of this time-step. To resume, you can press the button <i class="button">Go</i> again.</li>
+   </ul>
+
+   <h3>Buttons</h3>
+
+   <ul>
+      <li><i class="button">Setup</i>: Creates one single initial technology with <i class="slider">num-agents</i> users.</li>
+      <li><i class="button">Go</i>: Pressing this button will run the model until this same button is pressed again (or until time-step <i class="slider">pause-at-time-step</i>, if not reached yet).</td>
+      </li>
+      <li><i class="button">Go once</i>: Pressing this button will run the model one time step only.</li>
+      <li><i class="button">Relax network</i>: Pressing this button the network of technologies is laid out nicely so the network topology can be easily appreciated. This button has visual effects only</li>
+   </ul>
+
+   <h2>MONITORS AND PLOTS</h2>
+
+   <h3>Monitors</h3>
+
+   <ul>
+      <li><i class="monitor">time-step</i>: Time-step in the model. The monitor is placed at the top of the black window.</li>
+      <li><i class="monitor">transitions</i>: Number of transitions in the run. A transition occurs if and only if the minimum quality level <i class="variable">l<sub>&alpha;</sub></i> across agents (i.e. of every technology &alpha; in use) increases.</li>
+      <li><i class="monitor">recombinations</i>: Number of recombinations in the run. We say that a technology has been created by recombination if and only if at least two of its creators were using different technologies before becoming innovators.</li>
+      <li><i class="monitor">accumulated entropy</i>: Accumulated entropy since the beginning of the run. Entropy measures the variety of technologies that are in use. In a given time-step <i class="variable">t</i>, the entropy of the system is defined as: <i class="variable">Entropy<sub>t</sub></i> = - &sum;<sub><i class="variable">&alpha;</i></sub>(<i class="variable">n<sub>&alpha;,t</sub></i>/<i class="parameter">N</i>)&middot;log<sub>2</sub>(<i class="variable">n<sub>&alpha;,t</sub></i>/<i class="parameter">N</i>).
+      </li>
+   </ul>
+
+
+   <h3>Plots</h3>
+
+   <ul>
+      <li><i class="plot">Quality levels in use</i>: Time series of the (minimum, maximum, and mean) quality levels of the technologies that are being used by at least one agent.</li>
+      <li><i class="plot">Utility</i>: Time series of the (minimum, maximum, and mean) utility obtained by the agents.</li>
+   </ul>
+
+   <H2>LICENCE</H2>
+   <p><b>Recombranch</b> is an evolutionary model of technological transitions designed to explore the dynamics of innovation.
+      <br>Copyright (C) 2009 <a target="_blank" href="http://home.ieis.tue.nl/kfrenken/">Koen Frenken</a>, <a target="_blank" href="http://luis.izqui.org">Luis R. Izquierdo</a> &amp; Paolo Zeppini.</p>
+
+   <p>This program is free software; you can redistribute it and/or modify it under the terms of the <a target="_blank" href="http://www.gnu.org/copyleft/gpl.html">GNU General Public License</a> as published by the Free Software Foundation; either version 3 of the License, or (at your option) any later version.</p>
+   <p>This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the <a target="_blank" href="http://www.gnu.org/copyleft/gpl.html">GNU General Public License</a> for more details.</p>
+   <p>You can download a copy of the <a target="_blank" href="http://www.gnu.org/copyleft/gpl.html">GNU General Public License</a> by clicking <a target="_blank" href="./gpl-3.0.txt">here</a>; you can also get a printed copy writing to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.</p>
+   <p>Contact information:
+      <br>Luis R. Izquierdo
+      <br> University of Burgos, Spain.
+      <br> e-mail: <a href="mailto:lrizquierdo@ubu.es">lrizquierdo@ubu.es</a>
+   </p>
+
+   <H2>MODELLERS</H2>
+   <p>This program has been designed and implemented by <a target="_blank" href="http://home.ieis.tue.nl/kfrenken/">Koen Frenken</a>, <a target="_blank" href="http://luis.izqui.org">Luis R. Izquierdo</a> &amp; Paolo Zeppini.</p>
+
+   <H2>REFERENCES</H2>
+   <ul>
+      <li><b><a target="_blank" href="http://home.ieis.tue.nl/kfrenken/">Frenken, K.</a>, <a target="_blank" href="http://luis.izqui.org">Izquierdo, L.R.</a> &amp; Zeppini,P. (2012)</b>. Branching innovation, recombinant innovation, and endogenous technological transitions. <i>Environmental Innovation and Societal Transitions</i>. <a target="_blank" href="http://dx.doi.org/10.1016/j.eist.2012.06.001">[Download]</a>
+   </ul>
+
+   <hr>
+
+</body>
+
+</html>
