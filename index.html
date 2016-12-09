@@ -105,6 +105,14 @@
          font-weight: bold
       }
    </STYLE>
+   <STYLE type="text/css">
+      img {
+         max-width: 100%;
+         height: auto;
+         width: auto\9;
+         /* ie8 */
+      }
+   </STYLE>
 
 </HEAD>
 
@@ -147,6 +155,8 @@
    <H2>DESCRIPTION OF THE MODEL</H2>
 
    <p>This section explains the formal model that <b>Recombranch</b> implements. The information provided here should suffice to re-implement the same formal model in any sophisticated enough modelling platform. We use bold red italicised arial font to denote <i class="parameter">parameters</i> (i.e. variables that can be set by the user), and we use bold green italicised arial font to denote the name of the corresponding <i class="slider">slider</i> in the interface of the model above. All <i class="slider">sliders</i> can be changed at run-time with immediate effect on the dynamics of the model (except the number of agents in the run <i class="slider">num-agents</i>).</p>
+
+   <img style="margin:0px auto;display:block" src="./recombranch.png" alt="timeline" />
 
    <p>In the model there is a constant population of <i class="parameter">N</i> agents (<i class="slider">num-agents</i> &ge; 1) and an evolving set of technologies that agents may use. The model runs in discrete time-steps. At any given time-step <i class="variable">t</i>, each agent is using one and only one technology, and derives a certain utility from doing so. The utility <i class="variable">u<sub>&alpha;,t</sub></i> gained at time-step <i class="variable">t</i> when using technology <i class="variable">&alpha;</i> comes from an intrinsic quality of the technology <i class="variable">l<sub>&alpha;</sub></i> and from the positive externalities that other users of technology <i class="variable">&alpha;</i> exercise on the considered agent:</p>
 
